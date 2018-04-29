@@ -1,10 +1,10 @@
-FROM golang
-WORKDIR /go/src/github.com/habibridho/simple-go
-ADD . ./
-RUN ./build.sh
+FROM golang as builder
+WORKDIR /go/src/github.com/habibridho/simple-go/
+COPY . ./
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix .
 
-FROM alpine:3.5
-WORKDIR /app
-COPY --from=0 /go/src/github.com/habibridho/simple-go/simple-go .
+FROM alpine:latest
+WORKDIR /app/
+COPY --from=builder /go/src/github.com/habibridho/simple-go/simple-go /app/simple-go
 EXPOSE 8888
 ENTRYPOINT ./simple-go
