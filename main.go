@@ -8,12 +8,12 @@ import (
 
 func main() {
 	server := &http.Server{
-		Addr:":8888",
+		Addr:":8090",
 	}
 
 	http.HandleFunc("/", hello)
 
-	fmt.Println("Server started on port 8888")
+	fmt.Println("Server started on port 8090")
 	server.ListenAndServe()
 }
 
